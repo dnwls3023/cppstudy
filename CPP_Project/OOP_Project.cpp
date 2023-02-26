@@ -7,18 +7,36 @@
 
 #include <iostream>
 #include <cstring>
-#define _CRT_SECURE_NO_WARNINGS
 
 using namespace std;
 const int NAME_LEN = 20;
 
-typedef struct{
+class Account
+{
+private:
 	int accID;
 	int balance;
-	char cusName[NAME_LEN];
-}Account;
+	char* cusName;
+public:
+	Account(int _accID,int _balance, char* _cusName) : accID(_accID), balance(_balance)
+	{ 
+		cusName = new char[strlen(_cusName)+1];
+		strcpy(cusName, _cusName);
+	}
+	~Account()
+	{
+		delete[] cusName;
+	}
+	
+	void SetAccID(int _accID) { accID = _accID; }
+	void SetBalance(int _balance) { balance = _balance; }
+	void SetCusName(char* _cusName) { strcpy(cusName,_cusName); }
+	int GetAccID() { return accID; }
+	int GetBalance() { return balance; }
+	char* GetCusName() { return cusName; }
+};
 
-Account accArr[100];
+Account* accArr[100];
 int accNum;
 
 int Input()
@@ -46,7 +64,7 @@ enum Type
 void MakeAccountFunc() 
 {
 	int id;
-	char name[NAME_LEN];
+	char* name = new char[NAME_LEN];
 	int balance;
 
 	cout << "[계좌개설]" << endl;
@@ -54,10 +72,8 @@ void MakeAccountFunc()
 	cout << "이 름: "; cin >> name;
 	cout << "입금액: "; cin >> balance;
 
-	accArr[accNum].accID = id;
-	accArr[accNum].balance = balance;
-	strcpy(accArr[accNum].cusName, name);
-	accNum++;
+	accArr[accNum++] = new Account(id, balance, name);
+	
 }
 void DepositFunc() 
 {
@@ -68,9 +84,9 @@ void DepositFunc()
 
 	for (int i = 0; i < accNum; ++i) 
 	{
-		if (accArr[i].accID == accountID)
+		if (accArr[i]->GetAccID() == accountID)
 		{
-			accArr[i].balance += depositMoney;
+			accArr[i].SetBalance(accArr[i].GetBalance() + depositMoney);
 			cout << "입금완료" << endl << endl;
 			return;
 		}
@@ -85,15 +101,15 @@ void WithdrawFunc()
 
 	for (int i = 0; i < accNum; ++i)
 	{
-		if (accArr[i].accID == accountID)
+		if (accArr[i].GetAccID() == accountID)
 		{
-			if (accArr[i].balance < withdrawMoney)
+			if (accArr[i].GetBalance() < withdrawMoney)
 			{
 				cout << "잔액부족" << endl << endl;
 				return;
 			}
 
-			accArr[i].balance -= withdrawMoney;
+			accArr[i].SetBalance(accArr[i].GetBalance() - withdrawMoney);
 			cout << "출금완료" << endl << endl;
 			return;
 		}
@@ -104,9 +120,9 @@ void OutputInfoFunc()
 {
 	for (int i = 0; i < accNum; ++i) 
 	{
-		cout << "계좌ID: " << accArr[i].accID << endl;
-		cout << "이 름: " << accArr[i].cusName << endl;
-		cout << "잔 액: " << accArr[i].balance << endl;
+		cout << "계좌ID: " << accArr[i].GetAccID() << endl;
+		cout << "이 름: " << accArr[i].GetCusName() << endl;
+		cout << "잔 액: " << accArr[i].GetBalance() << endl;
 	}
 }
 void ExitFunc() 
