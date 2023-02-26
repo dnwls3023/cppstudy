@@ -1,15 +1,25 @@
+/*
+* 
+* Banking System Ver 0.1
+* 내용 : OOP 단계별 프로젝트의 기본 틀 구성
+* 
+*/
+
 #include <iostream>
-#include <map>
-#include "OOP_Project.h"
+#include <cstring>
+#define _CRT_SECURE_NO_WARNINGS
+
 using namespace std;
+const int NAME_LEN = 20;
 
-map<int,int> m;
-map<int, string> nm;
+typedef struct{
+	int accID;
+	int balance;
+	char cusName[NAME_LEN];
+}Account;
 
-struct BankData {
-	string name;
-	int money;
-};
+Account accArr[100];
+int accNum;
 
 int Input()
 {
@@ -35,15 +45,19 @@ enum Type
 
 void MakeAccountFunc() 
 {
-	int id;string name;int depositMoney;
+	int id;
+	char name[NAME_LEN];
+	int balance;
 
 	cout << "[계좌개설]" << endl;
 	cout << "계좌ID: "; cin >> id;
 	cout << "이 름: "; cin >> name;
-	cout << "입금액: "; cin >> depositMoney;
+	cout << "입금액: "; cin >> balance;
 
-	m[id] = depositMoney;
-	nm[id] = name;
+	accArr[accNum].accID = id;
+	accArr[accNum].balance = balance;
+	strcpy(accArr[accNum].cusName, name);
+	accNum++;
 }
 void DepositFunc() 
 {
@@ -51,8 +65,16 @@ void DepositFunc()
 	cout << "[입	금]" << endl;
 	cout << "계좌ID: "; cin >> accountID;
 	cout << "입금액: "; cin >> depositMoney;
-	m[accountID] += depositMoney;
-	cout << "입금완료" << endl;
+
+	for (int i = 0; i < accNum; ++i) 
+	{
+		if (accArr[i].accID == accountID)
+		{
+			accArr[i].balance += depositMoney;
+			cout << "입금완료" << endl << endl;
+			return;
+		}
+	}
 }
 void WithdrawFunc() 
 {
@@ -60,35 +82,31 @@ void WithdrawFunc()
 	cout << "[출	금]" << endl;
 	cout << "계좌ID: "; cin >> accountID;
 	cout << "출금액: "; cin >> withdrawMoney;
-	m[accountID] -= withdrawMoney;
+
+	for (int i = 0; i < accNum; ++i)
+	{
+		if (accArr[i].accID == accountID)
+		{
+			if (accArr[i].balance < withdrawMoney)
+			{
+				cout << "잔액부족" << endl << endl;
+				return;
+			}
+
+			accArr[i].balance -= withdrawMoney;
+			cout << "출금완료" << endl << endl;
+			return;
+		}
+	}
+	cout << "유효하지 않은 ID 입니다." << endl;
 }
 void OutputInfoFunc() 
 {
-	int accountID;
-	if (m.size() == 1) {
-		for (auto iter = m.begin(); iter != m.end(); iter++) 
-		{
-			cout << "계좌ID: " << iter->first << endl;
-			cout << "이 름:" << nm[iter->first] << endl;
-			cout << "잔 액:" << iter->second << endl;
-		}
-	}
-	else 
+	for (int i = 0; i < accNum; ++i) 
 	{
-		cout << "찾으시는 계좌ID를 입력하세요" << endl;
-		cin >> accountID;
-
-		for (auto iter = m.begin(); iter != m.end(); iter++)
-		{
-			if (accountID == iter->first) 
-			{
-				cout << "계좌ID: " << iter->first << endl;
-				cout << "이 름:" << nm[iter->first] << endl;
-				cout << "잔 액:" << iter->second << endl;
-				return;
-			}
-		}
-		cout << "일치하는 계좌ID가 없습니다" << endl;
+		cout << "계좌ID: " << accArr[i].accID << endl;
+		cout << "이 름: " << accArr[i].cusName << endl;
+		cout << "잔 액: " << accArr[i].balance << endl;
 	}
 }
 void ExitFunc() 
