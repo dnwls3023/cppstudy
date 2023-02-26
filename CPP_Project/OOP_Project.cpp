@@ -1,6 +1,6 @@
 /*
 * 
-* Banking System Ver 0.1
+* Banking System Ver 0.2
 * 내용 : OOP 단계별 프로젝트의 기본 틀 구성
 * 
 */
@@ -86,7 +86,7 @@ void DepositFunc()
 	{
 		if (accArr[i]->GetAccID() == accountID)
 		{
-			accArr[i].SetBalance(accArr[i].GetBalance() + depositMoney);
+			accArr[i]->SetBalance(accArr[i]->GetBalance() + depositMoney);
 			cout << "입금완료" << endl << endl;
 			return;
 		}
@@ -101,15 +101,15 @@ void WithdrawFunc()
 
 	for (int i = 0; i < accNum; ++i)
 	{
-		if (accArr[i].GetAccID() == accountID)
+		if (accArr[i]->GetAccID() == accountID)
 		{
-			if (accArr[i].GetBalance() < withdrawMoney)
+			if (accArr[i]->GetBalance() < withdrawMoney)
 			{
 				cout << "잔액부족" << endl << endl;
 				return;
 			}
 
-			accArr[i].SetBalance(accArr[i].GetBalance() - withdrawMoney);
+			accArr[i]->SetBalance(accArr[i]->GetBalance() - withdrawMoney);
 			cout << "출금완료" << endl << endl;
 			return;
 		}
@@ -120,9 +120,9 @@ void OutputInfoFunc()
 {
 	for (int i = 0; i < accNum; ++i) 
 	{
-		cout << "계좌ID: " << accArr[i].GetAccID() << endl;
-		cout << "이 름: " << accArr[i].GetCusName() << endl;
-		cout << "잔 액: " << accArr[i].GetBalance() << endl;
+		cout << "계좌ID: " << accArr[i]->GetAccID() << endl;
+		cout << "이 름: " << accArr[i]->GetCusName() << endl;
+		cout << "잔 액: " << accArr[i]->GetBalance() << endl;
 	}
 }
 void ExitFunc() 
