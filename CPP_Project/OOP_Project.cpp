@@ -1,6 +1,6 @@
 /*
 * 
-* Banking System Ver 0.5
+* Banking System Ver 0.6
 * 내용 : OOP 단계별 프로젝트의 기본 틀 구성
 * 
 */
@@ -33,11 +33,11 @@ public:
 		delete[] cusName;
 	}
 	
-	void Deposit(int money)
+	virtual void Deposit(int money)
 	{
 		balance += money;
 	}
-	void WithDraw(int money)
+	virtual void WithDraw(int money)
 	{
 		// 출금하려는 돈이 지금 가지고 있는 돈보다 많을 경우
 		if (balance < money)
@@ -54,6 +54,74 @@ public:
 	char* GetCusName() const { return cusName; }
 };
 
+class NormalAccount : public Account
+{
+	// 이자율
+private:
+	int interestRate;
+public:
+	NormalAccount(int _accID,int _balance,char* _cusName, int _interestRate)
+		: Account(_accID,_balance,_cusName), interestRate(_interestRate)
+	{
+	}
+	~NormalAccount()
+	{
+
+	}
+
+	virtual void Deposit(int money)
+	{
+		Account::Deposit(CalcInterestRate(money));
+	}
+	virtual void Withdraw(int money)
+	{
+		Account::WithDraw(money);
+	}
+	int CalcInterestRate(int money,int plusRate=0)
+	{
+		int tRate = interestRate + plusRate;
+		return money * (100 + tRate) / 100;
+	}
+};
+
+class HighCreditAccount : public NormalAccount
+{
+	// 신용등급
+private:
+	int creditRate;
+public:
+	enum CreditRate { A = 1, B, C };
+	HighCreditAccount(int _accID, int _balance, char* _cusName, int _interestRate, int _creditRate)
+		: NormalAccount(_accID,_balance, _cusName,_interestRate),creditRate(_creditRate)
+	{
+
+	}
+	~HighCreditAccount()
+	{
+
+	}
+	virtual void Deposit(int money)
+	{
+		Account::Deposit(CalcInterestRate(money, CalcCreditRate(creditRate) ) );
+	}
+	virtual void WithDraw(int money)
+	{
+		Account::WithDraw(money);
+	}
+	int CalcCreditRate(int credit)
+	{
+		switch (credit)
+		{
+		case A:
+			return 7;
+		case B:
+			return 4;
+		case C:
+			return 2;
+		}
+	}
+};
+
 class AccountHandler
 {
 private:
@@ -63,7 +131,7 @@ public:
 	AccountHandler()
 		: accNum(0)
 	{
-		
+
 	}
 	~AccountHandler()
 	{
@@ -89,21 +157,24 @@ public:
 			cout << "이 름: "; cin >> name;
 			cout << "입금액: "; cin >> balance;
 			cout << "이자율: "; cin >> interestRate;
+			accArr[accNum++] = new NormalAccount(id, balance, name, interestRate);
 		}
 		else if (selectAcc == 2)
 		{
-			
+
 			cout << "[계좌개설]" << endl;
 			cout << "계좌ID: "; cin >> id;
 			cout << "이 름: "; cin >> name;
 			cout << "입금액: "; cin >> balance;
 			cout << "이자율: "; cin >> interestRate;
 			cout << "신용등급(1toA,2toB,3toC)"; cin >> creditRate;
+			accArr[accNum++] = new HighCreditAccount(id, balance, name, interestRate, creditRate);
 		}
-		
-
-		accArr[accNum++] = new Account(id, balance, name);
-
+		else
+		{
+			cout << "잘못된 접근입니다." << endl;
+			return;
+		}
 	}
 	void Deposit()
 	{
@@ -159,28 +230,6 @@ public:
 	{
 		exit(0);
 	}
-};
-
-class NormalAccount : public Account
-{
-	// 이자율
-private:
-	int interestRate;
-public:
-	NormalAccount(int _accID,int _balance,char* _cusName, int _interestRate)
-		: Account(_accID,_balance,_cusName)
-	{
-		
-	}
-};
-
-class HighCreditAccount : public NormalAccount
-{
-	// 신용등급
-private:
-	int creditRate;
-public:
-	enum CreditRate { A = 1, B, C };
 };
 
 int Input()
