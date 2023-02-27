@@ -33,8 +33,21 @@ public:
 		delete[] cusName;
 	}
 	
-	void SetAccID(int _accID) { accID = _accID; }
-	void SetBalance(int _balance) { balance = _balance; }
+	void Deposit(int money)
+	{
+		balance += money;
+	}
+	void WithDraw(int money)
+	{
+		// 출금하려는 돈이 지금 가지고 있는 돈보다 많을 경우
+		if (balance < money)
+		{
+			cout << "잔액이 부족합니다." << endl;
+			return;
+		}
+
+		balance -= money;
+	}
 	void SetCusName(char* _cusName) { strcpy(cusName,_cusName); }
 	int GetAccID() const { return accID; }
 	int GetBalance() const { return balance; }
@@ -64,11 +77,30 @@ public:
 		int id;
 		char* name = new char[NAME_LEN];
 		int balance;
-
-		cout << "[계좌개설]" << endl;
-		cout << "계좌ID: "; cin >> id;
-		cout << "이 름: "; cin >> name;
-		cout << "입금액: "; cin >> balance;
+		cout << "[계좌종류 선택]" << endl;
+		// 선택계좌, 이자율, 신용등급
+		int selectAcc, interestRate, creditRate;
+		cout << "1. 보통예금계좌 2.신용신뢰계좌" << endl;
+		cin >> selectAcc;
+		if (selectAcc == 1)
+		{
+			cout << "[계좌개설]" << endl;
+			cout << "계좌ID: "; cin >> id;
+			cout << "이 름: "; cin >> name;
+			cout << "입금액: "; cin >> balance;
+			cout << "이자율: "; cin >> interestRate;
+		}
+		else if (selectAcc == 2)
+		{
+			
+			cout << "[계좌개설]" << endl;
+			cout << "계좌ID: "; cin >> id;
+			cout << "이 름: "; cin >> name;
+			cout << "입금액: "; cin >> balance;
+			cout << "이자율: "; cin >> interestRate;
+			cout << "신용등급(1toA,2toB,3toC)"; cin >> creditRate;
+		}
+		
 
 		accArr[accNum++] = new Account(id, balance, name);
 
@@ -84,7 +116,7 @@ public:
 		{
 			if (accArr[i]->GetAccID() == accountID)
 			{
-				accArr[i]->SetBalance(accArr[i]->GetBalance() + depositMoney);
+				accArr[i]->Deposit(depositMoney);
 				cout << "입금완료" << endl << endl;
 				return;
 			}
@@ -107,7 +139,7 @@ public:
 					return;
 				}
 
-				accArr[i]->SetBalance(accArr[i]->GetBalance() - withdrawMoney);
+				accArr[i]->WithDraw(withdrawMoney);
 				cout << "출금완료" << endl << endl;
 				return;
 			}
@@ -127,6 +159,28 @@ public:
 	{
 		exit(0);
 	}
+};
+
+class NormalAccount : public Account
+{
+	// 이자율
+private:
+	int interestRate;
+public:
+	NormalAccount(int _accID,int _balance,char* _cusName, int _interestRate)
+		: Account(_accID,_balance,_cusName)
+	{
+		
+	}
+};
+
+class HighCreditAccount : public NormalAccount
+{
+	// 신용등급
+private:
+	int creditRate;
+public:
+	enum CreditRate { A = 1, B, C };
 };
 
 int Input()
