@@ -1,6 +1,6 @@
 /*
 * 
-* Banking System Ver 0.3
+* Banking System Ver 0.5
 * 내용 : OOP 단계별 프로젝트의 기본 틀 구성
 * 
 */
@@ -36,13 +36,98 @@ public:
 	void SetAccID(int _accID) { accID = _accID; }
 	void SetBalance(int _balance) { balance = _balance; }
 	void SetCusName(char* _cusName) { strcpy(cusName,_cusName); }
-	int GetAccID() { return accID; }
-	int GetBalance() { return balance; }
-	char* GetCusName() { return cusName; }
+	int GetAccID() const { return accID; }
+	int GetBalance() const { return balance; }
+	char* GetCusName() const { return cusName; }
 };
 
-Account* accArr[100];
-int accNum;
+class AccountHandler
+{
+private:
+	Account* accArr[100];
+	int accNum;
+public:
+	AccountHandler()
+		: accNum(0)
+	{
+		
+	}
+	~AccountHandler()
+	{
+		for (int i = 0; i < 100; ++i)
+		{
+			delete accArr[i];
+		}
+	}
+	void MakeAccount()
+	{
+		int id;
+		char* name = new char[NAME_LEN];
+		int balance;
+
+		cout << "[계좌개설]" << endl;
+		cout << "계좌ID: "; cin >> id;
+		cout << "이 름: "; cin >> name;
+		cout << "입금액: "; cin >> balance;
+
+		accArr[accNum++] = new Account(id, balance, name);
+
+	}
+	void Deposit()
+	{
+		int accountID, depositMoney;
+		cout << "[입	금]" << endl;
+		cout << "계좌ID: "; cin >> accountID;
+		cout << "입금액: "; cin >> depositMoney;
+
+		for (int i = 0; i < accNum; ++i)
+		{
+			if (accArr[i]->GetAccID() == accountID)
+			{
+				accArr[i]->SetBalance(accArr[i]->GetBalance() + depositMoney);
+				cout << "입금완료" << endl << endl;
+				return;
+			}
+		}
+	}
+	void Withdraw()
+	{
+		int accountID, withdrawMoney;
+		cout << "[출	금]" << endl;
+		cout << "계좌ID: "; cin >> accountID;
+		cout << "출금액: "; cin >> withdrawMoney;
+
+		for (int i = 0; i < accNum; ++i)
+		{
+			if (accArr[i]->GetAccID() == accountID)
+			{
+				if (accArr[i]->GetBalance() < withdrawMoney)
+				{
+					cout << "잔액부족" << endl << endl;
+					return;
+				}
+
+				accArr[i]->SetBalance(accArr[i]->GetBalance() - withdrawMoney);
+				cout << "출금완료" << endl << endl;
+				return;
+			}
+		}
+		cout << "유효하지 않은 ID 입니다." << endl;
+	}
+	void OutputInfo()
+	{
+		for (int i = 0; i < accNum; ++i)
+		{
+			cout << "계좌ID: " << accArr[i]->GetAccID() << endl;
+			cout << "이 름: " << accArr[i]->GetCusName() << endl;
+			cout << "잔 액: " << accArr[i]->GetBalance() << endl;
+		}
+	}
+	void Exit()
+	{
+		exit(0);
+	}
+};
 
 int Input()
 {
@@ -66,98 +151,32 @@ enum Type
 	Exit,			// 5. 프로그램 종료
 };
 
-void MakeAccountFunc() 
-{
-	int id;
-	char* name = new char[NAME_LEN];
-	int balance;
 
-	cout << "[계좌개설]" << endl;
-	cout << "계좌ID: "; cin >> id;
-	cout << "이 름: "; cin >> name;
-	cout << "입금액: "; cin >> balance;
-
-	accArr[accNum++] = new Account(id, balance, name);
-	
-}
-void DepositFunc() 
-{
-	int accountID, depositMoney;
-	cout << "[입	금]" << endl;
-	cout << "계좌ID: "; cin >> accountID;
-	cout << "입금액: "; cin >> depositMoney;
-
-	for (int i = 0; i < accNum; ++i) 
-	{
-		if (accArr[i]->GetAccID() == accountID)
-		{
-			accArr[i]->SetBalance(accArr[i]->GetBalance() + depositMoney);
-			cout << "입금완료" << endl << endl;
-			return;
-		}
-	}
-}
-void WithdrawFunc() 
-{
-	int accountID, withdrawMoney;
-	cout << "[출	금]" << endl;
-	cout << "계좌ID: "; cin >> accountID;
-	cout << "출금액: "; cin >> withdrawMoney;
-
-	for (int i = 0; i < accNum; ++i)
-	{
-		if (accArr[i]->GetAccID() == accountID)
-		{
-			if (accArr[i]->GetBalance() < withdrawMoney)
-			{
-				cout << "잔액부족" << endl << endl;
-				return;
-			}
-
-			accArr[i]->SetBalance(accArr[i]->GetBalance() - withdrawMoney);
-			cout << "출금완료" << endl << endl;
-			return;
-		}
-	}
-	cout << "유효하지 않은 ID 입니다." << endl;
-}
-void OutputInfoFunc() 
-{
-	for (int i = 0; i < accNum; ++i) 
-	{
-		cout << "계좌ID: " << accArr[i]->GetAccID() << endl;
-		cout << "이 름: " << accArr[i]->GetCusName() << endl;
-		cout << "잔 액: " << accArr[i]->GetBalance() << endl;
-	}
-}
-void ExitFunc() 
-{
-	exit(0);
-}
 
 int main(void)
 {
 	int select = 0;
-	
+	AccountHandler accHandler;
+
 	while (true)
 	{
 		select = Input();
 		switch (select)
 		{
 		case Type::MakeAccount:
-			MakeAccountFunc();
+			accHandler.MakeAccount();
 			break;
 		case Type::Deposit:
-			DepositFunc();
+			accHandler.Deposit();
 			break;
 		case Type::Withdraw:
-			WithdrawFunc();
+			accHandler.Withdraw();
 			break;
 		case Type::OutputInfo:
-			OutputInfoFunc();
+			accHandler.OutputInfo();
 			break;
 		case Type::Exit:
-			ExitFunc();
+			accHandler.Exit();
 			break;
 		}
 	}
