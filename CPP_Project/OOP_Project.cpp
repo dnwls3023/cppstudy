@@ -1,6 +1,6 @@
 /*
 * 
-* Banking System Ver 0.2
+* Banking System Ver 0.3
 * 내용 : OOP 단계별 프로젝트의 기본 틀 구성
 * 
 */
@@ -22,6 +22,11 @@ public:
 	{ 
 		cusName = new char[strlen(_cusName)+1];
 		strcpy(cusName, _cusName);
+	}
+	Account(const Account& copy) : accID(copy.accID), balance(copy.balance)
+	{
+		cusName = new char[strlen(copy.cusName) + 1];
+		strcpy(cusName, copy.cusName);
 	}
 	~Account()
 	{
