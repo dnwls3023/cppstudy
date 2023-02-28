@@ -24,10 +24,13 @@
     <ClCompile Include="CopyConstructure.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="OperatorOverloading.cpp">
+    <ClCompile Include="OperatorOverloadingR.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Template.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorOverloadingY.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
