@@ -1,3 +1,8 @@
+#ifndef __NORMAL_ACCOUNT_H__
+#define __NORMAL_ACCOUNT_H__
+
+#include "Account1.h"
+
 class NormalAccount : public Account1
 {
 	// ¿Ã¿⁄¿≤
@@ -27,3 +32,5 @@ public:
 		return money * (100 + tRate) / 100;
 	}
 };
+
+#endif

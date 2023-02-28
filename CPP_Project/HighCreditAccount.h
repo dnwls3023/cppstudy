@@ -1,3 +1,9 @@
+#ifndef __HIGH_CREDIT_ACCOUNT_H__
+#define __HIGH_CREDIT_ACCOUNT_H__
+
+#include "NormalAccount.h"
+#include "Account1.h"
+
 class HighCreditAccount : public NormalAccount
 {
 	// 신용등급
@@ -35,3 +41,5 @@ public:
 		}
 	}
 };
+
+#endif

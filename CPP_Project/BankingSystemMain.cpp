@@ -1,13 +1,13 @@
 /*
 * 
-* Banking System Ver 0.6
-* 내용 : OOP 단계별 프로젝트의 기본 틀 구성
+* Banking System Ver 0.7
+* 
 * 
 */
 
 #include <iostream>
 #include <cstring>
-
+#include "AccountHandler1.h"
 using namespace std;
 
 int Input()
@@ -37,7 +37,7 @@ enum Type
 int main(void)
 {
 	int select = 0;
-	AccountHandler accHandler;
+	AccountHandler1 accHandler;
 
 	while (true)
 	{

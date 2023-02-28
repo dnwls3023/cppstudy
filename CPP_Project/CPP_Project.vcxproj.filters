@@ -26,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OOP_Project.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Account1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

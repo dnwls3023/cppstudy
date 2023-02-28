@@ -1,4 +1,8 @@
-#pragma once
+#ifndef __ACCOUNT_HANDLER_H__
+#define __ACCOUNT_HANDLER_H__
+
+#include "Account1.h"
+
 class AccountHandler1
 {
 private:
@@ -13,3 +17,5 @@ public:
 	void OutputInfo();
 	void Exit();
 };
+
+#endif

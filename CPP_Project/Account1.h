@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __ACCOUNT_H__
+#define __ACCOUNT_H__
+
 class Account1
 {
 private:
@@ -17,3 +19,5 @@ public:
 	int GetBalance() const;
 	char* GetCusName() const;
 };
+
+#endif
