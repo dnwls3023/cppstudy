@@ -14,8 +14,23 @@ public:
 	}
 	friend Point operator+(const Point& pos1, const Point& pos2);
 	friend Point operator-(const Point& pos1, const Point& pos2);
-	friend Point& operator+=(const Point& pos1, const Point& pos2);
-	friend Point& operator-=(const Point& pos1, const Point& pos2);
+	friend bool operator==(const Point& pos1, const Point& pos2);
+	friend bool operator!=(const Point& pos1, const Point& pos2);
+	
+	// ! 문제 10-1의 2번문제
+	Point& operator+=(const Point& ref)
+	{
+		xpos += ref.xpos;
+		ypos += ref.ypos;
+		return *this;
+	}
+
+	Point& operator-=(const Point& ref)
+	{
+		xpos -= ref.xpos;
+		ypos -= ref.ypos;
+		return *this;
+	}
 };
 
 Point operator+(const Point& pos1, const Point& pos2)
@@ -23,21 +38,23 @@ Point operator+(const Point& pos1, const Point& pos2)
 	return Point(pos1.xpos + pos2.xpos, pos1.ypos + pos2.ypos);
 }
 
+// 문제 10-1의 1번문제
 Point operator-(const Point& pos1, const Point& pos2)
 {
 	return Point(pos1.xpos - pos2.xpos, pos1.ypos - pos2.ypos);
 }
 
-Point& operator+=(const Point& pos1, const Point& pos2)
+// 문제 10-1의 3번문제
+bool operator==(const Point& pos1, const Point& pos2)
 {
-	Point& ret = pos1 + pos2;
-	return ret;
+	return (pos1.xpos == pos2.xpos) && (pos1.ypos == pos2.ypos);
 }
 
-Point& operator-=(const Point& pos1, const Point& pos2)
+bool operator!=(const Point& pos1, const Point& pos2)
 {
-	return pos1 - pos2;
+	return !(pos1 == pos2);
 }
+
 
 int main(void)
 {
