@@ -13,25 +13,40 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\R">
+      <UniqueIdentifier>{e4a45974-b902-4af0-98ab-ccf365fc2c35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\B">
+      <UniqueIdentifier>{ddac1b2d-24d5-4664-b998-5df4a8d1f83c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PointerThis.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SelfRef.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CopyConstructure.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\B</Filter>
     </ClCompile>
-    <ClCompile Include="OperatorOverloadingR.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Template.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="OneOpndOverloading.cpp">
+      <Filter>소스 파일\B</Filter>
     </ClCompile>
     <ClCompile Include="OperatorOverloadingY.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\B</Filter>
+    </ClCompile>
+    <ClCompile Include="PointerThis.cpp">
+      <Filter>소스 파일\B</Filter>
+    </ClCompile>
+    <ClCompile Include="SelfRef.cpp">
+      <Filter>소스 파일\B</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorOverloadingR.cpp">
+      <Filter>소스 파일\R</Filter>
+    </ClCompile>
+    <ClCompile Include="OverrideFinal.cpp">
+      <Filter>소스 파일\R</Filter>
+    </ClCompile>
+    <ClCompile Include="Template.cpp">
+      <Filter>소스 파일\R</Filter>
+    </ClCompile>
+    <ClCompile Include="FirstOperationOverloading.cpp">
+      <Filter>소스 파일\B</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
