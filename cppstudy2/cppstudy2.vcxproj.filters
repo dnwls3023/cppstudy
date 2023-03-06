@@ -19,6 +19,9 @@
     <Filter Include="소스 파일\B">
       <UniqueIdentifier>{ddac1b2d-24d5-4664-b998-5df4a8d1f83c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\B\Chapter11">
+      <UniqueIdentifier>{79695a16-ceb7-415b-85a0-c72c149381c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CopyConstructure.cpp">
@@ -47,6 +50,18 @@
     </ClCompile>
     <ClCompile Include="FirstOperationOverloading.cpp">
       <Filter>소스 파일\B</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignShallowCopyError.cpp">
+      <Filter>소스 파일\B</Filter>
+    </ClCompile>
+    <ClCompile Include="InheritAssignOperation.cpp">
+      <Filter>소스 파일\B</Filter>
+    </ClCompile>
+    <ClCompile Include="Book.cpp">
+      <Filter>소스 파일\B\Chapter11</Filter>
+    </ClCompile>
+    <ClCompile Include="HASComposite.cpp">
+      <Filter>소스 파일\B\Chapter11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
